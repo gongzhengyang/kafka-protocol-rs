@@ -5,6 +5,7 @@ mod common;
 mod fetch_response;
 #[cfg(feature = "client")]
 mod integration_tests;
+#[cfg(feature = "messages_enums")]
 mod messages;
 #[cfg(feature = "client")]
 mod produce_fetch;

@@ -19,6 +19,8 @@ use anyhow::Result;
 use std::convert::TryFrom;
 #[cfg(feature = "messages_enums")]
 use enum_dispatch::enum_dispatch;
+use num_derive::FromPrimitive;
+use num_traits::FromPrimitive;
 
 pub mod consumer_protocol_assignment;
 pub use consumer_protocol_assignment::ConsumerProtocolAssignment;
@@ -598,7 +600,7 @@ impl_request!(
 );
 
 /// Valid API keys in the Kafka protocol.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, FromPrimitive)]
 pub enum ApiKey {
     /// API key for request ProduceRequest
     ProduceKey = 0,
@@ -988,113 +990,7 @@ impl TryFrom<i16> for ApiKey {
     type Error = ();
 
     fn try_from(v: i16) -> Result<Self, Self::Error> {
-        match v {
-            x if x == ApiKey::ProduceKey as i16 => Ok(ApiKey::ProduceKey),
-            x if x == ApiKey::FetchKey as i16 => Ok(ApiKey::FetchKey),
-            x if x == ApiKey::ListOffsetsKey as i16 => Ok(ApiKey::ListOffsetsKey),
-            x if x == ApiKey::MetadataKey as i16 => Ok(ApiKey::MetadataKey),
-            x if x == ApiKey::LeaderAndIsrKey as i16 => Ok(ApiKey::LeaderAndIsrKey),
-            x if x == ApiKey::StopReplicaKey as i16 => Ok(ApiKey::StopReplicaKey),
-            x if x == ApiKey::UpdateMetadataKey as i16 => Ok(ApiKey::UpdateMetadataKey),
-            x if x == ApiKey::ControlledShutdownKey as i16 => Ok(ApiKey::ControlledShutdownKey),
-            x if x == ApiKey::OffsetCommitKey as i16 => Ok(ApiKey::OffsetCommitKey),
-            x if x == ApiKey::OffsetFetchKey as i16 => Ok(ApiKey::OffsetFetchKey),
-            x if x == ApiKey::FindCoordinatorKey as i16 => Ok(ApiKey::FindCoordinatorKey),
-            x if x == ApiKey::JoinGroupKey as i16 => Ok(ApiKey::JoinGroupKey),
-            x if x == ApiKey::HeartbeatKey as i16 => Ok(ApiKey::HeartbeatKey),
-            x if x == ApiKey::LeaveGroupKey as i16 => Ok(ApiKey::LeaveGroupKey),
-            x if x == ApiKey::SyncGroupKey as i16 => Ok(ApiKey::SyncGroupKey),
-            x if x == ApiKey::DescribeGroupsKey as i16 => Ok(ApiKey::DescribeGroupsKey),
-            x if x == ApiKey::ListGroupsKey as i16 => Ok(ApiKey::ListGroupsKey),
-            x if x == ApiKey::SaslHandshakeKey as i16 => Ok(ApiKey::SaslHandshakeKey),
-            x if x == ApiKey::ApiVersionsKey as i16 => Ok(ApiKey::ApiVersionsKey),
-            x if x == ApiKey::CreateTopicsKey as i16 => Ok(ApiKey::CreateTopicsKey),
-            x if x == ApiKey::DeleteTopicsKey as i16 => Ok(ApiKey::DeleteTopicsKey),
-            x if x == ApiKey::DeleteRecordsKey as i16 => Ok(ApiKey::DeleteRecordsKey),
-            x if x == ApiKey::InitProducerIdKey as i16 => Ok(ApiKey::InitProducerIdKey),
-            x if x == ApiKey::OffsetForLeaderEpochKey as i16 => Ok(ApiKey::OffsetForLeaderEpochKey),
-            x if x == ApiKey::AddPartitionsToTxnKey as i16 => Ok(ApiKey::AddPartitionsToTxnKey),
-            x if x == ApiKey::AddOffsetsToTxnKey as i16 => Ok(ApiKey::AddOffsetsToTxnKey),
-            x if x == ApiKey::EndTxnKey as i16 => Ok(ApiKey::EndTxnKey),
-            x if x == ApiKey::WriteTxnMarkersKey as i16 => Ok(ApiKey::WriteTxnMarkersKey),
-            x if x == ApiKey::TxnOffsetCommitKey as i16 => Ok(ApiKey::TxnOffsetCommitKey),
-            x if x == ApiKey::DescribeAclsKey as i16 => Ok(ApiKey::DescribeAclsKey),
-            x if x == ApiKey::CreateAclsKey as i16 => Ok(ApiKey::CreateAclsKey),
-            x if x == ApiKey::DeleteAclsKey as i16 => Ok(ApiKey::DeleteAclsKey),
-            x if x == ApiKey::DescribeConfigsKey as i16 => Ok(ApiKey::DescribeConfigsKey),
-            x if x == ApiKey::AlterConfigsKey as i16 => Ok(ApiKey::AlterConfigsKey),
-            x if x == ApiKey::AlterReplicaLogDirsKey as i16 => Ok(ApiKey::AlterReplicaLogDirsKey),
-            x if x == ApiKey::DescribeLogDirsKey as i16 => Ok(ApiKey::DescribeLogDirsKey),
-            x if x == ApiKey::SaslAuthenticateKey as i16 => Ok(ApiKey::SaslAuthenticateKey),
-            x if x == ApiKey::CreatePartitionsKey as i16 => Ok(ApiKey::CreatePartitionsKey),
-            x if x == ApiKey::CreateDelegationTokenKey as i16 => {
-                Ok(ApiKey::CreateDelegationTokenKey)
-            }
-            x if x == ApiKey::RenewDelegationTokenKey as i16 => Ok(ApiKey::RenewDelegationTokenKey),
-            x if x == ApiKey::ExpireDelegationTokenKey as i16 => {
-                Ok(ApiKey::ExpireDelegationTokenKey)
-            }
-            x if x == ApiKey::DescribeDelegationTokenKey as i16 => {
-                Ok(ApiKey::DescribeDelegationTokenKey)
-            }
-            x if x == ApiKey::DeleteGroupsKey as i16 => Ok(ApiKey::DeleteGroupsKey),
-            x if x == ApiKey::ElectLeadersKey as i16 => Ok(ApiKey::ElectLeadersKey),
-            x if x == ApiKey::IncrementalAlterConfigsKey as i16 => {
-                Ok(ApiKey::IncrementalAlterConfigsKey)
-            }
-            x if x == ApiKey::AlterPartitionReassignmentsKey as i16 => {
-                Ok(ApiKey::AlterPartitionReassignmentsKey)
-            }
-            x if x == ApiKey::ListPartitionReassignmentsKey as i16 => {
-                Ok(ApiKey::ListPartitionReassignmentsKey)
-            }
-            x if x == ApiKey::OffsetDeleteKey as i16 => Ok(ApiKey::OffsetDeleteKey),
-            x if x == ApiKey::DescribeClientQuotasKey as i16 => Ok(ApiKey::DescribeClientQuotasKey),
-            x if x == ApiKey::AlterClientQuotasKey as i16 => Ok(ApiKey::AlterClientQuotasKey),
-            x if x == ApiKey::DescribeUserScramCredentialsKey as i16 => {
-                Ok(ApiKey::DescribeUserScramCredentialsKey)
-            }
-            x if x == ApiKey::AlterUserScramCredentialsKey as i16 => {
-                Ok(ApiKey::AlterUserScramCredentialsKey)
-            }
-            x if x == ApiKey::VoteKey as i16 => Ok(ApiKey::VoteKey),
-            x if x == ApiKey::BeginQuorumEpochKey as i16 => Ok(ApiKey::BeginQuorumEpochKey),
-            x if x == ApiKey::EndQuorumEpochKey as i16 => Ok(ApiKey::EndQuorumEpochKey),
-            x if x == ApiKey::DescribeQuorumKey as i16 => Ok(ApiKey::DescribeQuorumKey),
-            x if x == ApiKey::AlterPartitionKey as i16 => Ok(ApiKey::AlterPartitionKey),
-            x if x == ApiKey::UpdateFeaturesKey as i16 => Ok(ApiKey::UpdateFeaturesKey),
-            x if x == ApiKey::EnvelopeKey as i16 => Ok(ApiKey::EnvelopeKey),
-            x if x == ApiKey::FetchSnapshotKey as i16 => Ok(ApiKey::FetchSnapshotKey),
-            x if x == ApiKey::DescribeClusterKey as i16 => Ok(ApiKey::DescribeClusterKey),
-            x if x == ApiKey::DescribeProducersKey as i16 => Ok(ApiKey::DescribeProducersKey),
-            x if x == ApiKey::BrokerRegistrationKey as i16 => Ok(ApiKey::BrokerRegistrationKey),
-            x if x == ApiKey::BrokerHeartbeatKey as i16 => Ok(ApiKey::BrokerHeartbeatKey),
-            x if x == ApiKey::UnregisterBrokerKey as i16 => Ok(ApiKey::UnregisterBrokerKey),
-            x if x == ApiKey::DescribeTransactionsKey as i16 => Ok(ApiKey::DescribeTransactionsKey),
-            x if x == ApiKey::ListTransactionsKey as i16 => Ok(ApiKey::ListTransactionsKey),
-            x if x == ApiKey::AllocateProducerIdsKey as i16 => Ok(ApiKey::AllocateProducerIdsKey),
-            x if x == ApiKey::ConsumerGroupHeartbeatKey as i16 => {
-                Ok(ApiKey::ConsumerGroupHeartbeatKey)
-            }
-            x if x == ApiKey::ConsumerGroupDescribeKey as i16 => {
-                Ok(ApiKey::ConsumerGroupDescribeKey)
-            }
-            x if x == ApiKey::ControllerRegistrationKey as i16 => {
-                Ok(ApiKey::ControllerRegistrationKey)
-            }
-            x if x == ApiKey::GetTelemetrySubscriptionsKey as i16 => {
-                Ok(ApiKey::GetTelemetrySubscriptionsKey)
-            }
-            x if x == ApiKey::PushTelemetryKey as i16 => Ok(ApiKey::PushTelemetryKey),
-            x if x == ApiKey::AssignReplicasToDirsKey as i16 => Ok(ApiKey::AssignReplicasToDirsKey),
-            x if x == ApiKey::ListClientMetricsResourcesKey as i16 => {
-                Ok(ApiKey::ListClientMetricsResourcesKey)
-            }
-            x if x == ApiKey::DescribeTopicPartitionsKey as i16 => {
-                Ok(ApiKey::DescribeTopicPartitionsKey)
-            }
-            _ => Err(()),
-        }
+        Self::from_i16(v).ok_or(())
     }
 }
 
